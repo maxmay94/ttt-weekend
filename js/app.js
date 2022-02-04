@@ -1,6 +1,29 @@
 /*-------------------------------- Constants --------------------------------*/
+// const winStates2 = [3, 2, 3, 2, 4, 2, 3, 2, 3]
 
-const winStates = [3, 2, 3, 2, 4, 2, 3, 2, 3]
+const winStates = [
+  [0, 1, 2],
+  [3, 4, 5],  //Across
+  [6, 7, 8],
+
+  [0, 4, 8],
+  [2, 4, 6],  // Diagonal
+
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8]   // Down
+]
+
+// const winStates3 = [
+//   [1, 1, 1, null, null, null, null, null, null],
+//   [null, null, null, 1, 1, 1, null, null, null],
+//   [null, null, null, null, null, null, 1, 1, 1],
+//   [1, null, null, 1, null, null, 1, null, null],
+//   [null, 1, null, null, 1, null, null, 1, null],
+//   [null, null, 1, null, null, 1, null, null, 1],
+//   [1, null, null, null, 1, null, null, null, 1],
+//   [null, null, 1, null, 1, null, 1, null, null]
+// ]
 
 /*---------------------------- Variables (state) ----------------------------*/
 
@@ -12,9 +35,6 @@ const squares = document.querySelectorAll('.square')
 const message = document.getElementById('message')
 const gameBoard = document.querySelector('.board')
 const resetBtn = document.querySelector("#reset-button")
-console.log(squares)
-
-
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -22,9 +42,11 @@ gameBoard.addEventListener('click', handleClick)
 resetBtn.addEventListener('click', init)
 
 /*-------------------------------- Functions --------------------------------*/
+
 init()
 
 function init() {
+
   message.textContent = ''
   sq0.textContent = ''
   sq1.textContent = ''
@@ -42,7 +64,7 @@ function init() {
   turn = 1
   winner = null
 
-  //render()
+  render()
 }
 
 function render() {
@@ -57,23 +79,39 @@ function render() {
 }
 
 function handleClick(evt) {
-  if (evt.target.className === 'square') {
-    let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
 
-    if (board[pick] === null) {
-      if (turn === 1) board[pick] = 1
-      else board[pick] = -1
-      turn *= -1 // pass turn
+  console.log(winner)
+
+  if (winner == null) {
+    if (evt.target.className === 'square') {
+      let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
+
+      if (board[pick] === null) {
+        if (turn === 1) board[pick] = 1
+        else board[pick] = -1
+        turn *= -1 // pass turn
+      }
+    } else {
+      return
     }
-  } else {
-    return
+    resetBtn.removeAttribute('hidden')
+    render()
   }
-  resetBtn.removeAttribute('hidden')
-
-  render()
 }
 
-function checkWin() {
 
-  
+function checkWin() {
+  let add
+
+  for (let i = 0; i < winStates.length; i++) {
+    add = 0
+    for (let j = 0; j < winStates[i].length; j++) {
+      add += board[parseInt(winStates[i][j])]
+      if (Math.abs(add) === 3) {
+        message.textContent = `${(turn === 1) ? 'O' : 'X'} Wins!`
+        winner = 'win'
+        return
+      }
+    }
+  }
 }
