@@ -27,17 +27,15 @@ const sq7 = document.getElementById('sq7')
 const sq8 = document.getElementById('sq8')
 const squares = document.querySelectorAll('.square')
 const message = document.getElementById('message')
+const gameBoard = document.querySelector('.board')
 
 
 /*----------------------------- Event Listeners -----------------------------*/
 
-
+gameBoard.addEventListener('click', handleClick)
 
 /*-------------------------------- Functions --------------------------------*/
 init()
-
-
-
 
 function init() {
   message.textContent = ''
@@ -66,5 +64,12 @@ function render() {
     } else if(board[i] === -1) {
       squares[i].textContent = 'O'
     } 
+  }
+}
+
+function handleClick(evt) {
+  if(evt.target.className === 'square') {
+    let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
+    console.log(pick)
   }
 }
