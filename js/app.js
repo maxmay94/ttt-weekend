@@ -1,15 +1,6 @@
 /*-------------------------------- Constants --------------------------------*/
 
-const winStates = [
-  [1,1,1,null,null,null,null,null,null],
-  [null,null,null,1,1,1,null,null,null],
-  [null,null,null,null,null,null,1,1,1],
-  [1,null,null,1,null,null,1,null,null],
-  [null,1,null,null,1,null,null,1,null],
-  [null,null,1,null,null,1,null,null,1],
-  [1,null,null,null,1,null,null,null,1],
-  [null,null,1,null,1,null,1,null,null]
-]
+const winStates = [3, 2, 3, 2, 4, 2, 3, 2, 3]
 
 /*---------------------------- Variables (state) ----------------------------*/
 
@@ -17,19 +8,11 @@ let board, turn, winner
 
 /*------------------------ Cached Element References ------------------------*/
 
-const sq0 = document.getElementById('sq0')
-const sq1 = document.getElementById('sq1')
-const sq2 = document.getElementById('sq2')
-const sq3 = document.getElementById('sq3')
-const sq4 = document.getElementById('sq4')
-const sq5 = document.getElementById('sq5')
-const sq6 = document.getElementById('sq6')
-const sq7 = document.getElementById('sq7')
-const sq8 = document.getElementById('sq8')
 const squares = document.querySelectorAll('.square')
 const message = document.getElementById('message')
 const gameBoard = document.querySelector('.board')
 const resetBtn = document.querySelector("#reset-button")
+console.log(squares)
 
 
 
@@ -59,32 +42,38 @@ function init() {
   turn = 1
   winner = null
 
-  render()
-  console.log(squares)
+  //render()
 }
 
 function render() {
-  for(let i = 0; i <board.length; i++) {
-    if(board[i] === 1) {
+  for (let i = 0; i < board.length; i++) {
+    if (board[i] === 1) {
       squares[i].textContent = 'X'
-    } else if(board[i] === -1) {
+    } else if (board[i] === -1) {
       squares[i].textContent = 'O'
-    } 
+    }
   }
+  checkWin()
 }
 
 function handleClick(evt) {
-  if(evt.target.className === 'square') {
+  if (evt.target.className === 'square') {
     let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
 
-    if(board[pick] === null) {
+    if (board[pick] === null) {
       if (turn === 1) board[pick] = 1
       else board[pick] = -1
       turn *= -1 // pass turn
     }
+  } else {
+    return
   }
-
   resetBtn.removeAttribute('hidden')
 
   render()
+}
+
+function checkWin() {
+
+  
 }
