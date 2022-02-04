@@ -1,5 +1,14 @@
 /*-------------------------------- Constants --------------------------------*/
-
+const winStates = [
+  [1,1,1,null,null,null,null,null,null],
+  [null,null,null,1,1,1,null,null,null],
+  [null,null,null,null,null,null,1,1,1],
+  [1,null,null,1,null,null,1,null,null],
+  [null,1,null,null,1,null,null,1,null],
+  [null,null,1,null,null,1,null,null,1],
+  [1,null,null,null,1,null,null,null,1],
+  [null,null,1,null,1,null,1,null,null]
+]
 
 /*---------------------------- Variables (state) ----------------------------*/
 
@@ -52,15 +61,10 @@ function init() {
 
 function render() {
   for(let i = 0; i <board.length; i++) {
-    if(board[i] === null) {
-      console.log('RENDER: null')
-    } else if(board[i] === 1) {
+    if(board[i] === 1) {
       squares[i].textContent = 'X'
     } else if(board[i] === -1) {
       squares[i].textContent = 'O'
-    } else {
-      console.log('RENDER: ERROR')
-      console.log(position)
-    }
+    } 
   }
 }
