@@ -80,8 +80,6 @@ function render() {
 
 function handleClick(evt) {
 
-  console.log(winner)
-
   if (winner == null) {
     if (evt.target.className === 'square') {
       let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
@@ -101,17 +99,19 @@ function handleClick(evt) {
 
 
 function checkWin() {
-  let add
-
-  for (let i = 0; i < winStates.length; i++) {
-    add = 0
-    for (let j = 0; j < winStates[i].length; j++) {
-      add += board[parseInt(winStates[i][j])]
-      if (Math.abs(add) === 3) {
+  for (let i = 0; i < winStates.length; i++) { // go to each winState
+    let add = 0
+    for (let j = 0; j < winStates[i].length; j++) { 
+      add += board[parseInt(winStates[i][j])] // see if board has values at each winState index, if it does add them
+      if (Math.abs(add) === 3) { // if they add to 3 or -3 thats a win!
         message.textContent = `${(turn === 1) ? 'O' : 'X'} Wins!`
         winner = 'win'
         return
       }
     }
+  }
+  if(!board.includes(null)) {
+   winner = 'tie'
+   message.textContent = `It's a tie!`
   }
 }
