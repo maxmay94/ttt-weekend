@@ -1,5 +1,4 @@
 /*-------------------------------- Constants --------------------------------*/
-// const winStates2 = [3, 2, 3, 2, 4, 2, 3, 2, 3]
 
 const winStates = [
   [0, 1, 2],
@@ -13,17 +12,6 @@ const winStates = [
   [1, 4, 7],
   [2, 5, 8]   // Down
 ]
-
-// const winStates3 = [
-//   [1, 1, 1, null, null, null, null, null, null],
-//   [null, null, null, 1, 1, 1, null, null, null],
-//   [null, null, null, null, null, null, 1, 1, 1],
-//   [1, null, null, 1, null, null, 1, null, null],
-//   [null, 1, null, null, 1, null, null, 1, null],
-//   [null, null, 1, null, null, 1, null, null, 1],
-//   [1, null, null, null, 1, null, null, null, 1],
-//   [null, null, 1, null, 1, null, 1, null, null]
-// ]
 
 /*---------------------------- Variables (state) ----------------------------*/
 
@@ -68,18 +56,20 @@ function init() {
 }
 
 function render() {
+  if(turn === 1) message.textContent = `It's player \u2206's turn`
+  else message.textContent = `It's player \u2205's turn`
+
   for (let i = 0; i < board.length; i++) {
     if (board[i] === 1) {
-      squares[i].textContent = 'X'
+      squares[i].textContent = '\u2206'
     } else if (board[i] === -1) {
-      squares[i].textContent = 'O'
+      squares[i].textContent = '\u2205'
     }
   }
   checkWin()
 }
 
 function handleClick(evt) {
-
   if (winner == null) {
     if (evt.target.className === 'square') {
       let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
@@ -104,8 +94,9 @@ function checkWin() {
     for (let j = 0; j < winStates[i].length; j++) { 
       add += board[parseInt(winStates[i][j])] // see if board has values at each winState index, if it does add them
       if (Math.abs(add) === 3) { // if they add to 3 or -3 thats a win!
-        message.textContent = `${(turn === 1) ? 'O' : 'X'} Wins!`
+        message.textContent = `Player ${(turn === 1) ? '\u2205' : '\u2206'} wins!` // 1 and -1 are backwards because turn changes in handleClick()
         winner = 'win'
+        confetti.start(3000)
         return
       }
     }
