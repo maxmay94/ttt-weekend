@@ -1,4 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
+
 const winStates = [
   [1,1,1,null,null,null,null,null,null],
   [null,null,null,1,1,1,null,null,null],
@@ -70,6 +71,13 @@ function render() {
 function handleClick(evt) {
   if(evt.target.className === 'square') {
     let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
-    console.log(pick)
+
+    if(board[pick] === null) {
+      if (turn === 1) board[pick] = 1
+      else board[pick] = -1
+      turn *= -1 // pass turn
+    }
   }
+
+  render()
 }
