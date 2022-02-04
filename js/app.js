@@ -29,11 +29,14 @@ const sq8 = document.getElementById('sq8')
 const squares = document.querySelectorAll('.square')
 const message = document.getElementById('message')
 const gameBoard = document.querySelector('.board')
+const resetBtn = document.querySelector("#reset-button")
+
 
 
 /*----------------------------- Event Listeners -----------------------------*/
 
 gameBoard.addEventListener('click', handleClick)
+resetBtn.addEventListener('click', init)
 
 /*-------------------------------- Functions --------------------------------*/
 init()
@@ -49,6 +52,8 @@ function init() {
   sq6.textContent = ''
   sq7.textContent = ''
   sq8.textContent = ''
+
+  resetBtn.setAttribute("hidden", true)
 
   board = [null, null, null, null, null, null, null, null, null]
   turn = 1
@@ -78,6 +83,8 @@ function handleClick(evt) {
       turn *= -1 // pass turn
     }
   }
+
+  resetBtn.removeAttribute('hidden')
 
   render()
 }
