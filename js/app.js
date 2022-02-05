@@ -13,6 +13,9 @@ const winStates = [
   [2, 5, 8]   // Down
 ]
 
+const applause = new Audio('./Audio/applause-cheering.mp3')
+const boo = new Audio('./Audio/angry-crowd-booing.mp3')
+const angryScream = new Audio('./Audio/angryScream.mp3')
 /*---------------------------- Variables (state) ----------------------------*/
 
 let board, turn, winner
@@ -23,6 +26,7 @@ const squares = document.querySelectorAll('.square')
 const message = document.getElementById('message')
 const gameBoard = document.querySelector('.board')
 const resetBtn = document.querySelector("#reset-button")
+const mainTitle = document.getElementById('main-title')
 
 /*----------------------------- Event Listeners -----------------------------*/
 
@@ -36,6 +40,7 @@ init()
 function init() {
 
   gameBoard.className = 'board animate__animated animate__pulse' 
+  mainTitle.className = 'animate__animated animate__lightSpeedInLeft'
 
   message.className = ''
   sq0.textContent = ''
@@ -72,18 +77,19 @@ function render() {
 }
 
 function handleClick(evt) {
-
-  gameBoard.className = 'board' // reset board so it will animate on restart
+  // reset board and mainTitle so they will animate at init
+  gameBoard.className = 'board' 
+  mainTitle.className = ''
 
   if (winner == null) {
     if (evt.target.className === 'square') {
-      // get index of clicked square
-      let pick = parseInt(evt.target.id.charAt(2)) 
+      // get index of clicked square from id
+      let pick = parseInt(evt.target.id.charAt(2))  
       if (board[pick] === null) {
         if (turn === 1) board[pick] = 1
         else board[pick] = -1
         turn *= -1 // pass turn
-      }
+      } 
     } else {
       return
     }
@@ -103,6 +109,8 @@ function checkWin() {
         // 1 and -1 are backwards because turn changes in handleClick()
         message.textContent = `Player ${(turn === 1) ? '\u2205' : '\u2206'} wins!` 
         message.className = 'animate__animated animate__heartBeat'
+        mainTitle.className = 'animate__animated animate__tada'
+        applause.play()
         winner = 'win'
         confetti.start(3000)
         return
@@ -113,5 +121,9 @@ function checkWin() {
    winner = 'tie'
    message.className = 'animate__animated animate__flash'
    message.textContent = `It's a tie!`
+   mainTitle.className ='animate__animated animate__hinge'
+   boo.play()
+   angryScream.play()
+   board.className = 'animate__animated animate__hinge'
   }
 }
