@@ -35,7 +35,9 @@ init()
 
 function init() {
 
-  message.textContent = ''
+  gameBoard.className = 'board animate__animated animate__pulse' 
+
+  message.className = ''
   sq0.textContent = ''
   sq1.textContent = ''
   sq2.textContent = ''
@@ -70,10 +72,13 @@ function render() {
 }
 
 function handleClick(evt) {
+
+  gameBoard.className = 'board' // reset board so it will animate on restart
+
   if (winner == null) {
     if (evt.target.className === 'square') {
-      let pick = parseInt(evt.target.id.charAt(2)) // get index of clicked square
-
+      // get index of clicked square
+      let pick = parseInt(evt.target.id.charAt(2)) 
       if (board[pick] === null) {
         if (turn === 1) board[pick] = 1
         else board[pick] = -1
@@ -87,14 +92,17 @@ function handleClick(evt) {
   }
 }
 
-
 function checkWin() {
   for (let i = 0; i < winStates.length; i++) { // go to each winState
     let add = 0
     for (let j = 0; j < winStates[i].length; j++) { 
+      // see if board has values at each winState index, if it does add them
       add += board[parseInt(winStates[i][j])] // see if board has values at each winState index, if it does add them
-      if (Math.abs(add) === 3) { // if they add to 3 or -3 thats a win!
-        message.textContent = `Player ${(turn === 1) ? '\u2205' : '\u2206'} wins!` // 1 and -1 are backwards because turn changes in handleClick()
+      // if they add to 3 or -3 thats a win!
+      if (Math.abs(add) === 3) { 
+        // 1 and -1 are backwards because turn changes in handleClick()
+        message.textContent = `Player ${(turn === 1) ? '\u2205' : '\u2206'} wins!` 
+        message.className = 'animate__animated animate__heartBeat'
         winner = 'win'
         confetti.start(3000)
         return
@@ -103,6 +111,7 @@ function checkWin() {
   }
   if(!board.includes(null)) {
    winner = 'tie'
+   message.className = 'animate__animated animate__flash'
    message.textContent = `It's a tie!`
   }
 }

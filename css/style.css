@@ -15,8 +15,10 @@ body {
 }
 
 h1 {
+  color: rgb(215, 65, 27);
   font-family: 'Monoton', cursive;
   font-size: 10vmin;
+  margin-top: 5vmin;
 }
 
 
@@ -26,7 +28,7 @@ section.board {
   grid-template-columns: repeat(3, 20vmin);
   grid-gap: 1vmin;
 
-  margin-top: 30px;
+  margin-top: 2vmin;
   justify-content: center;
 }
 
@@ -36,10 +38,11 @@ div {
   font-size: 12vmin;
   text-align: center;
   vertical-align: middle;
+  background-color: rgba(255, 85, 0, 0.149);
 }
 
 #reset-button {
   color: rgb(215, 65, 27);
-  margin: 30px auto;
+  margin: 2vmin auto;
   font-size: 2vmin;
 }
